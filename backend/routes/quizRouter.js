@@ -1,6 +1,6 @@
 const express = require('express');
 const auth = require('../middleware/auth');
-const { createQuiz, getQuizStats, getQuizByUser, getQuizTakenByUser, updateQuizById, fetchQuizToTake, searchQuiz, markQuizAsTaken, getResult, checkQuizTaken, getQuizProgress, getAllUserResult, getQuizStatsById, deleteQuiz, getSingleQuiz } = require('../controllers/quizController');
+const { createQuiz, createAiQuiz, getQuizStats, getQuizByUser, getQuizTakenByUser, updateQuizById, fetchQuizToTake, searchQuiz, markQuizAsTaken, getResult, checkQuizTaken, getQuizProgress, getAllUserResult, getQuizStatsById, deleteQuiz, getSingleQuiz } = require('../controllers/quizController');
 const router = express.Router()
 // router.use((req, res, next) => {
 //     //printing the route url
@@ -16,6 +16,8 @@ router.get('/stats/:quiz_id', auth, getQuizStats);
 // Get All Quizzes by User
 router.get('/', auth, getQuizByUser);
 // Get All Quizzes Taken by User
+
+router.post('/create-quiz-ai', auth, createAiQuiz);
 
 router.get('/taken', auth, getQuizTakenByUser);
 

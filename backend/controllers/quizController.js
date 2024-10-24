@@ -4,6 +4,7 @@ const QuizProgress = require('../models/QuizProgress');
 const User = require("../models/User")
 const generateUniqueId = require('generate-unique-id');
 const validations = require('../validators/validations');
+const {generateQuiz} = require('../services/aiServices');
 
 // Function to calculate score based on correct answers (if needed)
 function calculateScore(answers, questions) {
@@ -65,6 +66,19 @@ const createQuiz = async (req, res) => {
     res.status(500).json({ msg: 'Server error' });
   }
 };
+
+const createAiQuiz = async(req, res) => {
+   try{
+    const {topic, difficulty} = req.body;
+    const response = await generateQuiz(topic, difficulty);
+    console.log(response);
+    res.status(200).json(response);
+    
+   }catch(err){
+    console.error(err);
+    res.status(500).json({ msg: 'Server error' });
+   }
+}
 
 const getQuizStats = async (req, res) => {
   console.log('route reached');
@@ -663,5 +677,6 @@ module.exports = {
     getAllUserResult,
     getQuizStatsById,
     deleteQuiz,
-    getSingleQuiz
+    getSingleQuiz,
+    createAiQuiz
 };
